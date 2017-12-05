@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { ROUTES } from './constants';
 import Root from './components/Root';
+import CreatePostForm from './components/CreatePostForm';
 import { getCategories } from './utils/api';
 import {
     Route,
@@ -28,9 +29,7 @@ class App extends Component {
 
               <Switch>
                   <Route exact path={ROUTES.CREATE_POST} render={() => (
-                      <div>
-                          Create Post
-                      </div>
+                      <CreatePostForm/>
                   )}/>
 
                   <Route path={ROUTES.EDIT_POST} render={({match}) => (
