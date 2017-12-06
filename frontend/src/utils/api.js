@@ -90,6 +90,20 @@ export const createCommentForPost = (postId, body, author) =>
         })
     }).then(res => res.json())
 
+
+export const editComment = (id, body) =>
+    fetch(`${api}/comments/${id}`, {
+        method: 'PUT',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id,
+            body,
+        })
+    }).then(res => res.json())
+
 export const getCommentsForPost = (postId) =>
     fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())

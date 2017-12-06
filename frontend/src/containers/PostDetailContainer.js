@@ -11,6 +11,7 @@ import {
     upVoteOnPost,
     downVoteOnPost,
     createCommentForPost,
+    editComment,
 } from '../actions';
 
 
@@ -37,8 +38,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         deletePost: (id) => dispatch(deletePost(id)),
         upVoteOnPost: (id) => dispatch(upVoteOnPost(id)),
         downVoteOnPost: (id) => dispatch(downVoteOnPost(id)),
-        createCommentForPost: (body, author) => dispatch(createCommentForPost(ownProps.postId, body, author))
-
+        createCommentForPost: (body, author) => dispatch(createCommentForPost(ownProps.postId, body, author)),
+        editComment: (id, body) => dispatch(editComment(id, body))
     }
 
 }

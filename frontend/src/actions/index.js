@@ -119,6 +119,13 @@ export const createCommentForPost = (postId, body, author) => dispatch => {
     )
 }
 
+export const editComment = (id, body) => dispatch => {
+    API.editComment(id, body).then(comment => {
+        console.log(comment);
+        dispatch(updateComment(comment))
+    })
+}
+
 export const fetchCommentsForPost = (postId) => dispatch => {
     API.getCommentsForPost(postId).then(comments =>
         dispatch(receiveComments(comments))

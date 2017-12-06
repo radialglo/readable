@@ -4,8 +4,31 @@ import DateFormat from 'dateformat';
 import VotingView from './VotingView';
 import EditIcon from 'react-icons/lib/fa/pencil';
 import DeleteIcon from 'react-icons/lib/fa/trash';
+import serializeForm from 'form-serialize';
+import {ROUTES} from "../constants";
 
 class CommentItem extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEditing: false,
+            body: this.props.initBody,
+        };
+    }
+
+    toggleEdit = () => {
+        this.setState((prevState, props) => {
+            return {isEditing: !prevState.isEditing}
+        })
+
+    }
+
+    onBodyChange = (e) => {
+        this.setState({
+            body: e.target.value
+        })
+    }
+
     onDeleteComment = () => {
         const {id, deleteComment} = this.props;
         deleteComment(id);
@@ -21,8 +44,21 @@ class CommentItem extends Component {
         downVoteOnComment(id);
     }
 
+    onEditComment = (e) => {
+
+        e.preventDefault();
+
+        const { id } = this.props;
+
+        this.toggleEdit();
+        this.props.editComment(id, this.state.body);
+
+
+    }
+
     render() {
         const {id, body, category, commentCount, author, voteScore, timestamp} = this.props;
+        const {isEditing} = this.state;
         return (
             <div className="row">
                 <div className="col-md-1">
@@ -34,19 +70,31 @@ class CommentItem extends Component {
                         <div className="col-md-3">
                             <h6>{author} <small>{DateFormat(timestamp)}</small></h6>
 
-                            <p>
-                                {body}
-                            </p>
+                            {isEditing ? (
+                                <form onSubmit={this.onEditComment}>
+                                    <div className="form-group">
+                                        <textarea name="body" className="form-control" value={this.state.body} onChange={this.onBodyChange}/>
+                                    </div>
+
+                                    <button style={{margin: "5px"}} type="submit" className="btn btn-default btn-xs">Save</button>
+                                    <button type="button" className="btn btn-link" onClick={this.toggleEdit}>Cancel</button>
+                                </form>
+                            ): (
+                                <p>
+                                    {body}
+                                </p>
+                            )}
                         </div>
-                        <div className="col-md-1">
-                            {/* TODO: Change to Edit Post*/}
-                            <Link to={`/edit/${id}`}>
-                                <EditIcon size={20} color={"#aaa"}/>
-                            </Link>
-                        </div>
-                        <div className="col-md-1" style={{cursor: "pointer"}}>
-                            <DeleteIcon size={20} color={"#aaa"} onClick={this.onDeleteComment}/>
-                        </div>
+                        {isEditing ? null: (
+                            <div>
+                                <div className="col-md-1" style={{cursor: "pointer"}}>
+                                    <EditIcon size={20} color={"#aaa"} onClick={this.toggleEdit}/>
+                                </div>
+                                <div className="col-md-1" style={{cursor: "pointer"}}>
+                                    <DeleteIcon size={20} color={"#aaa"} onClick={this.onDeleteComment}/>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

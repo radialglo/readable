@@ -22,6 +22,7 @@ class PostDetailView extends Component {
             deleteComment,
             comments,
             createCommentForPost,
+            editComment,
         } = this.props;
 
         const  {
@@ -36,7 +37,6 @@ class PostDetailView extends Component {
             timestamp,
         } = post;
 
-        /* TODO Error message for deleted post */
         return (
             <div className="container" style={{paddingTop: "30px"}}>
                 { post.id && !post.deleted ?
@@ -69,11 +69,13 @@ class PostDetailView extends Component {
                                         id={id}
                                         author={author}
                                         body={body}
+                                        initBody={body}
                                         voteScore={voteScore}
                                         timestamp={timestamp}
                                         downVoteOnComment={downVoteOnComment}
                                         upVoteOnComment={upVoteOnComment}
                                         deleteComment={deleteComment}
+                                        editComment={editComment}
                                     />
                                 </li>
 
