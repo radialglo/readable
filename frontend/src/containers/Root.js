@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Root from '../components/Root';
-import { fetchPosts, fetchCategories } from '../actions';
+import { fetchPosts, fetchCategories, deletePost } from '../actions';
 
 function mapStateToProps({categories, posts}) {
     return {
@@ -14,6 +14,7 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchPosts: () => dispatch(fetchPosts()),
         fetchCategories: () => dispatch(fetchCategories()),
+        deletePost: (id) => dispatch(deletePost(id)),
     }
 
 }

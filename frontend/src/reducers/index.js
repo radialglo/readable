@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import {
     RECEIVE_POSTS,
-    RECEIVE_CATEGORIES
+    RECEIVE_CATEGORIES,
+    DELETE_POST,
 } from '../actions';
 
 function comments(state = { byIds: {}, allIds: []}, action) {
@@ -26,6 +27,18 @@ function posts(state = { byIds: {}, allIds: []}, action) {
                 byIds: postMap,
                 allIds: postIds
             };
+        case DELETE_POST:
+            const {id} = action;
+            return {
+                ...state,
+                byIds: {
+                    ...state.byIds,
+                    [id]: {
+                        ...state.byIds[id],
+                        deleted: true,
+                    }
+                },
+            }
         default:
             return state
     }

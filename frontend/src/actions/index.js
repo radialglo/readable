@@ -13,11 +13,6 @@ export function createPost() {
     }
 }
 
-export function deletePost() {
-    return {
-        type: DELETE_POST
-    }
-}
 
 export function receivePosts(posts) {
     return {
@@ -45,3 +40,13 @@ export const fetchCategories = () =>  dispatch => (
         dispatch(receiveCategories(categories))
     )
 );
+
+export const deletePost = (id) => dispatch => {
+    API.deletePost(id)
+
+    // let's make an optimistic update
+    dispatch({
+        type: DELETE_POST,
+        id
+    })
+}
