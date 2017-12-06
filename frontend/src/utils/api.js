@@ -74,6 +74,22 @@ export const voteOnPost = (id, voteType) =>
         })
     }).then(res => res.json())
 
+export const createCommentForPost = (postId, body, author) =>
+    fetch(`${api}/comments`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: uuidv1(),
+            timestamp: Date.now(),
+            parentId: postId,
+            body,
+            author,
+        })
+    }).then(res => res.json())
+
 export const getCommentsForPost = (postId) =>
     fetch(`${api}/posts/${postId}/comments`, { headers })
     .then(res => res.json())

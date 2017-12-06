@@ -10,6 +10,7 @@ import {
     deletePost,
     upVoteOnPost,
     downVoteOnPost,
+    createCommentForPost,
 } from '../actions';
 
 
@@ -26,16 +27,17 @@ function mapStateToProps({ posts, comments }, ownProps) {
 
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
     return {
         fetchPost: (postId) => dispatch(fetchPost(postId)),
         fetchCommentsForPost: (postId) => dispatch(fetchCommentsForPost(postId)),
-        deleteComment: (id) => dispatch(deleteComment(id)),
+        deleteComment: (id) => dispatch(deleteComment(id, ownProps.postId)),
         upVoteOnComment: (id) => dispatch(upVoteOnComment(id)),
         downVoteOnComment: (id) => dispatch(downVoteOnComment(id)),
         deletePost: (id) => dispatch(deletePost(id)),
         upVoteOnPost: (id) => dispatch(upVoteOnPost(id)),
         downVoteOnPost: (id) => dispatch(downVoteOnPost(id)),
+        createCommentForPost: (body, author) => dispatch(createCommentForPost(ownProps.postId, body, author))
 
     }
 

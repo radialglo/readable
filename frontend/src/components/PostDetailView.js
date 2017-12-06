@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import PostItem from './PostItem';
 import CommentItem from './CommentItem';
 import 'bootstrap/dist/css/bootstrap.css';
-import {downVoteOnComment} from "../actions";
+import CommmentFormView from './CommentFormView';
 
 
 class PostDetailView extends Component {
@@ -21,6 +21,7 @@ class PostDetailView extends Component {
             downVoteOnComment,
             deleteComment,
             comments,
+            createCommentForPost,
         } = this.props;
 
         const  {
@@ -58,6 +59,9 @@ class PostDetailView extends Component {
                                     isDetailed={true}
                                 />}
                         </div>
+
+                        <CommmentFormView createCommentForPost={createCommentForPost}/>
+
                         <ul className="list-unstyled">
                             {comments.map(({id, body, author, voteScore, deleted, timestamp}) => (
                                 deleted ? null : <li key={id}>
@@ -75,6 +79,8 @@ class PostDetailView extends Component {
 
                             ))}
                         </ul>
+
+
 
                 </div> : (
                     <p>Oh dear! The post was not found.</p>

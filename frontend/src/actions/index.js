@@ -110,17 +110,27 @@ export const voteOnPost = (id, voteType) => dispatch => {
 export const upVoteOnPost = (id) => voteOnPost(id, VOTE_TYPE.UP_VOTE)
 export const downVoteOnPost = (id) => voteOnPost(id, VOTE_TYPE.DOWN_VOTE)
 
+export const createCommentForPost = (postId, body, author) => dispatch => {
+    API.createCommentForPost(postId, body, author).then(
+        comment => dispatch({
+            type: CREATE_COMMENT,
+            comment,
+        })
+    )
+}
+
 export const fetchCommentsForPost = (postId) => dispatch => {
     API.getCommentsForPost(postId).then(comments =>
         dispatch(receiveComments(comments))
     )
 }
 
-export const deleteComment = (id) => dispatch => {
+export const deleteComment = (id, parentId) => dispatch => {
     API.deleteComment(id).then(
         dispatch({
             type: DELETE_COMMENT,
-            id
+            id,
+            parentId,
         })
     )
 }

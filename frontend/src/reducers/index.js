@@ -9,6 +9,7 @@ import {
     UPDATE_COMMENT,
     UPDATE_POST,
     UPDATE_POST_SORT,
+    CREATE_COMMENT,
 } from '../actions';
 import {
     POST_SORT
@@ -16,6 +17,17 @@ import {
 
 function comments(state = { byIds: {}, allIds: []}, action) {
     switch (action.type) {
+        case CREATE_COMMENT:
+            const newComment = action.comment;
+
+            return {
+                byIds: {
+                    ...state.byIds,
+                    [newComment.id]: newComment,
+                },
+                allIds: [...new Set([newComment.id].concat(...state.allIds))]
+            }
+
         case RECEIVE_COMMENTS:
             const { comments } = action;
             let commentMap = {};
@@ -135,6 +147,31 @@ function posts(state = { byIds: {}, allIds: []}, action) {
                     [post.id]: {
                         ...state.byIds[post.id],
                         ...post
+                    }
+                }
+            }
+        case CREATE_COMMENT:
+          const newComment = action.comment;
+          const newCommentParent = state.byIds[newComment.parentId]
+          return {
+              ...state,
+              byIds: {
+                  ...state.byIds,
+                  [newComment.parentId]: {
+                      ...state.byIds[newComment.parentId],
+                      commentCount: newCommentParent.commentCount + 1
+                  }
+              }
+          }
+        case DELETE_COMMENT:
+            const deletedCommentParent = state.byIds[action.parentId]
+            return {
+                ...state,
+                byIds: {
+                    ...state.byIds,
+                    [deletedCommentParent.id]: {
+                        ...deletedCommentParent,
+                        commentCount: deletedCommentParent.commentCount - 1
                     }
                 }
             }
