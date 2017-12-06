@@ -1,11 +1,45 @@
 import { connect } from 'react-redux';
 import Root from '../components/Root';
-import { fetchPosts, fetchCategories, deletePost } from '../actions';
+import { POST_SORT } from '../constants';
+import {
+    fetchPosts,
+    fetchCategories,
+    deletePost,
+    upVoteOnPost,
+    downVoteOnPost,
+    updatePostSort,
+} from '../actions';
 
-function mapStateToProps({categories, posts}) {
+function getSortPostsComparator(postSort) {
+    switch (postSort) {
+        case POST_SORT.LOWEST_VOTE_SCORE_FIRST:
+            return function (a, b) {
+                return a.voteScore - b.voteScore;
+            };
+        case POST_SORT.HIGHEST_VOTE_SCORE_FIRST:
+            return function (a, b) {
+                return b.voteScore - a.voteScore;
+            }
+        case POST_SORT.NEWEST_FIRST:
+            return function(a, b) {
+                return b.timestamp - a.timestamp;
+            }
+        case POST_SORT.OLDEST_FIRST:
+            // explicit fall-through
+        default:
+            return function(a, b) {
+                return a.timestamp - b.timestamp;
+            }
+    }
+}
+
+function mapStateToProps({categories, posts, postSort}) {
+    let postArray =  posts.allIds.map((id) => posts.byIds[id]);
+    postArray.sort(getSortPostsComparator(postSort))
     return {
         categories,
-        posts: posts.allIds.map((id) => posts.byIds[id]),
+        posts: postArray,
+        postSort
     }
 
 }
@@ -15,6 +49,9 @@ function mapDispatchToProps(dispatch) {
         fetchPosts: () => dispatch(fetchPosts()),
         fetchCategories: () => dispatch(fetchCategories()),
         deletePost: (id) => dispatch(deletePost(id)),
+        upVoteOnPost: (id) => dispatch(upVoteOnPost(id)),
+        downVoteOnPost: (id) => dispatch(downVoteOnPost(id)),
+        updatePostSort: (sortType) => dispatch(updatePostSort(sortType))
     }
 
 }

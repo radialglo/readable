@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import  PlusIcon from 'react-icons/lib/fa/plus-circle';
 import { Link } from 'react-router-dom'
-import { ROUTES } from '../constants';
+import { ROUTES, POST_SORT, POST_SORT_DISPLAY_TEXT } from '../constants';
 import PostItem from './PostItem';
 
 class Root extends Component {
@@ -10,14 +10,42 @@ class Root extends Component {
         fetchCategories();
         fetchPosts();
     }
+
+    onUpdateSort = (e) => {
+        const sortType = e.target.value;
+        const {
+            updatePostSort,
+        } = this.props;
+        updatePostSort(sortType);
+
+    }
+
     render () {
-        const { categories, posts, deletePost} = this.props;
+        const {
+            categories,
+            posts,
+            deletePost,
+            postSort,
+            downVoteOnPost,
+            upVoteOnPost,
+        } = this.props;
 
         return (
             <div>
                 <div className="col-md-8">
+                    <div className="row">
+                        <h4 className="col-md-12">
+                            <span> Sort by: </span>
+                            <select name="postSort" value={postSort}  onChange={this.onUpdateSort}>
+                                {Object.keys(POST_SORT).map((sort) => (
+                                    <option key={sort} value={sort}>{POST_SORT_DISPLAY_TEXT[sort]}</option>
+                                ))}
+                            </select>
+                        </h4>
+                    </div>
+
                     <ol>
-                        {posts.map(({id, title, category, commentCount, author, voteScore, deleted}) => (
+                        {posts.map(({id, title, category, commentCount, author, voteScore, deleted, timestamp}) => (
                             deleted ? null : <li key={id}>
                                 <PostItem
                                     id={id}
@@ -25,7 +53,10 @@ class Root extends Component {
                                     commentCount={commentCount}
                                     author={author}
                                     voteScore={voteScore}
+                                    timestamp={timestamp}
                                     deletePost={deletePost}
+                                    upVoteOnPost={upVoteOnPost}
+                                    downVoteOnPost={downVoteOnPost}
                                 />
                             </li>
                         ))}

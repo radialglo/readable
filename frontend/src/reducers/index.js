@@ -1,9 +1,14 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import {
     RECEIVE_POSTS,
     RECEIVE_CATEGORIES,
     DELETE_POST,
+    UPDATE_POST,
+    UPDATE_POST_SORT,
 } from '../actions';
+import {
+    POST_SORT
+} from '../constants';
 
 function comments(state = { byIds: {}, allIds: []}, action) {
     switch (action.type) {
@@ -39,6 +44,18 @@ function posts(state = { byIds: {}, allIds: []}, action) {
                     }
                 },
             }
+        case UPDATE_POST:
+            const { post } = action;
+            return {
+                ...state,
+                byIds: {
+                    ...state.byIds,
+                    [post.id]: {
+                        ...state.byIds[post.id],
+                        ...post
+                    }
+                }
+            }
         default:
             return state
     }
@@ -54,8 +71,20 @@ function categories(state = [], action) {
     }
 }
 
+function postSort(state = POST_SORT.OLDEST_FIRST, action) {
+    switch (action.type) {
+        case UPDATE_POST_SORT:
+            const { sort } = action;
+            return sort;
+        default:
+            return state
+    }
+
+}
+
 export default combineReducers({
     comments,
     posts,
     categories,
+    postSort,
 })

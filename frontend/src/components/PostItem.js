@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
+import DateFormat from 'dateformat';
 import UpIcon from 'react-icons/lib/fa/caret-up';
 import DownIcon from 'react-icons/lib/fa/caret-down';
 import EditIcon from 'react-icons/lib/fa/pencil';
@@ -11,8 +12,18 @@ class PostItem extends Component {
         deletePost(id);
     }
 
+    onUpVote = () => {
+        const {id, upVoteOnPost} = this.props;
+        upVoteOnPost(id);
+    }
+
+    onDownVote = () => {
+        const {id, downVoteOnPost} = this.props;
+        downVoteOnPost(id);
+    }
+
     render() {
-        const {id, title, category, commentCount, author, voteScore} = this.props;
+        const {id, title, category, commentCount, author, voteScore, timestamp} = this.props;
         return (
             <div className="row">
                 <div className="col-md-1">
@@ -20,7 +31,7 @@ class PostItem extends Component {
                         <tbody>
                         <tr style={{cursor: "pointer"}}>
                             <td>
-                                <UpIcon size={30} color={"#aaa"}/>
+                                <UpIcon size={30} color={"#aaa"} onClick={this.onUpVote}/>
                             </td>
                         </tr>
                         <tr>
@@ -32,7 +43,7 @@ class PostItem extends Component {
                         </tr>
                         <tr style={{cursor: "pointer"}}>
                             <td>
-                                <DownIcon size={30} color={"#aaa"}/>
+                                <DownIcon size={30} color={"#aaa"} onClick={this.onDownVote}/>
                             </td>
                         </tr>
                         </tbody>
@@ -42,7 +53,7 @@ class PostItem extends Component {
                 <div className="col-md-11">
                     <div className="row">
                         <div className="col-md-10">
-                            <h4><Link to={`/${category}/${id}`}>{title}</Link></h4>
+                            <h4><Link to={`/${category}/${id}`}>{title}</Link>  <small>{DateFormat(timestamp)}</small></h4>
                         </div>
                         <div className="col-md-1">
                             <Link to={`/edit/${id}`}>
