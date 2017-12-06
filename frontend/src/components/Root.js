@@ -50,6 +50,7 @@ class Root extends Component {
                                 <PostItem
                                     id={id}
                                     title={title}
+                                    category={category}
                                     commentCount={commentCount}
                                     author={author}
                                     voteScore={voteScore}
@@ -68,6 +69,9 @@ class Root extends Component {
                     </Link>
 
                     <ul>
+                        <li key="all">
+                            <Link to={ROUTES.ROOT}>All Categories</Link>
+                        </li>
                         {categories.map((category) => (
                             <li key={category.name}>
                                 <Link to={category.path}>{category.name}</Link>

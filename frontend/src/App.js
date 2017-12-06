@@ -29,10 +29,8 @@ class App extends Component {
                       </div>
                   )}/>
 
-                  <Route path={ROUTES.CATEGORY} render={({match}) => (
-                      <div>
-                          Category: {match.params.category}
-                      </div>
+                  <Route exact path={ROUTES.CATEGORY} render={({match}) => (
+                      <Root selectedCategory={match.params.category}/>
                   )}/>
 
 

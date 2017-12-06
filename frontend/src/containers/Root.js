@@ -33,12 +33,14 @@ function getSortPostsComparator(postSort) {
     }
 }
 
-function mapStateToProps({categories, posts, postSort}) {
+function mapStateToProps({categories, posts, postSort}, ownProps) {
     let postArray =  posts.allIds.map((id) => posts.byIds[id]);
+    const { selectedCategory } = ownProps;
+
     postArray.sort(getSortPostsComparator(postSort))
     return {
         categories,
-        posts: postArray,
+        posts: selectedCategory ? postArray.filter((post) => post.category === selectedCategory) : postArray,
         postSort
     }
 
