@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ROUTES } from './constants';
-import Root from './containers/Root';
+import PostListContainer from './containers/PostListContainer';
 import CreatePostFormContainer from './containers/CreatePostFormContainer';
 import {
     Route,
@@ -14,7 +14,7 @@ class App extends Component {
         return (
           <div>
               <Route exact path={ROUTES.ROOT} render={() => (
-                 <Root />
+                 <PostListContainer  />
               )}/>
 
               <Switch>
@@ -30,7 +30,7 @@ class App extends Component {
                   )}/>
 
                   <Route exact path={ROUTES.CATEGORY} render={({match}) => (
-                      <Root selectedCategory={match.params.category}/>
+                      <PostListContainer  selectedCategory={match.params.category}/>
                   )}/>
 
 

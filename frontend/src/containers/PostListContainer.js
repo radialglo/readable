@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Root from '../components/Root';
+import PostListView from '../components/PostListView';
 import { POST_SORT } from '../constants';
 import {
     fetchPosts,
@@ -58,4 +58,4 @@ function mapDispatchToProps(dispatch) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root)
+export default connect(mapStateToProps, mapDispatchToProps)(PostListView)
