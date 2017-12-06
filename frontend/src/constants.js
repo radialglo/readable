@@ -24,3 +24,8 @@ export const POST_SORT_DISPLAY_TEXT = {
     [POST_SORT.NEWEST_FIRST]: 'Newest First',
     [POST_SORT.OLDEST_FIRST]: 'Oldest First',
 }
+
+export const FORM_TYPE = {
+    EDIT: 'EDIT',
+    CREATE: 'CREATE',
+}

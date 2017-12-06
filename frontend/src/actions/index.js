@@ -1,7 +1,7 @@
 import * as API  from '../utils/api';
 import { VOTE_TYPE } from "../constants";
 
-export const RECEIVE_POSTS = 'LOAD_ALL_POSTS';
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const RECEIVE_CATEGORIES = 'LOAD_CATEGORIES';
 export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -13,11 +13,19 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPDATE_POST_SORT = 'UPDATE_POST_SORT';
 
 
-export function createPost() {
-    // TODO: use
-    return {
-        type: CREATE_POST
-    }
+export const createPost = (title, body, author, category) => dispatch => {
+    API.publishPost(title, body, author, category).then(post =>
+        dispatch({
+            type: CREATE_POST,
+            post
+        })
+    );
+}
+
+export const editPost = (id, title, body) => dispatch => {
+    API.editPost(id, title, body).then(post =>
+        dispatch(updatePost(post))
+    );
 }
 
 

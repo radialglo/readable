@@ -4,6 +4,7 @@ import { ROUTES } from './constants';
 import PostListContainer from './containers/PostListContainer';
 import CreatePostFormContainer from './containers/CreatePostFormContainer';
 import PostDetailContainer from './containers/PostDetailContainer';
+import EditPostFormContainer from './containers/EditPostFormContainer';
 import {
     Route,
     Switch
@@ -24,10 +25,7 @@ class App extends Component {
                   )}/>
 
                   <Route path={ROUTES.EDIT_POST} render={({match}) => (
-                      <div>
-                          Category: {match.params.category}
-                          Post Id: {match.params.post_id}
-                      </div>
+                      <EditPostFormContainer postId={match.params.post_id}/>
                   )}/>
 
                   <Route exact path={ROUTES.CATEGORY} render={({match}) => (

@@ -32,6 +32,20 @@ export const publishPost = (title, body, author, category) =>
             author,
             category,
         })
+    }).then(res => res.json())
+
+export const editPost = (id, title, body) =>
+    fetch(`${api}/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id,
+            title,
+            body,
+        })
     })
 
 export const getPosts = () =>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import {FORM_TYPE} from '../constants';
 
 class PostForm extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class PostForm extends Component {
 
     render() {
 
-        const {onSubmit, categories} = this.props;
+        const {onSubmit, categories, formType} = this.props;
 
         return (
             <form onSubmit={onSubmit}>
@@ -64,20 +65,25 @@ class PostForm extends Component {
                               onChange={this.handleBodyChange}/>
                 </div>
 
-                <div className="form-group">
-                    <label>Author</label>
-                    <input name="author" type="text" className="form-control" value={this.state.author}
-                           onChange={this.handleAuthorChange}/>
-                </div>
+                {formType === FORM_TYPE.CREATE ?
+                    <div className="form-group">
+                        <label>Author</label>
+                        <input name="author" type="text" className="form-control" value={this.state.author}
+                               onChange={this.handleAuthorChange}/>
+                    </div> : null
+                }
 
-                <div className="form-group">
-                    <label>Category</label>
-                    <select name="category" value={this.state.category} className="form-control" onChange={this.handleSelectChange}>
-                        {categories.map((category) => (
-                            <option key={category.name} value={category.name}>{category.name}</option>
-                        ))}
-                    </select>
-                </div>
+                {formType === FORM_TYPE.CREATE ?
+                    <div className="form-group">
+                        <label>Category</label>
+                        <select name="category" value={this.state.category} className="form-control"
+                                onChange={this.handleSelectChange}>
+                            {categories.map((category) => (
+                                <option key={category.name} value={category.name}>{category.name}</option>
+                            ))}
+                        </select>
+                    </div> : null
+                }
 
                 <button type="submit" className="btn btn-default">Submit</button>
             </form>

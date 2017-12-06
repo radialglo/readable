@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import {
+    CREATE_POST,
     RECEIVE_POSTS,
     RECEIVE_CATEGORIES,
     RECEIVE_COMMENTS,
@@ -85,6 +86,17 @@ function comments(state = { byIds: {}, allIds: []}, action) {
 
 function posts(state = { byIds: {}, allIds: []}, action) {
     switch (action.type) {
+        case CREATE_POST:
+            const newPost = action.post;
+
+            return {
+                byIds: {
+                    ...state.byIds,
+                    [newPost.id]: newPost
+                },
+                allIds: [...new Set([newPost.id].concat(...state.allIds))]
+            }
+
         case RECEIVE_POSTS:
             const { posts } = action;
             let postMap = {};
@@ -100,7 +112,8 @@ function posts(state = { byIds: {}, allIds: []}, action) {
                     ...postMap
                 },
                 allIds: [...new Set(postIds.concat(...state.allIds))]
-            };
+            }
+
         case DELETE_POST:
             const {id} = action;
             return {
