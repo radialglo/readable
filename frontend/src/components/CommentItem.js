@@ -5,8 +5,8 @@ import VotingView from './VotingView';
 import EditIcon from 'react-icons/lib/fa/pencil';
 import DeleteIcon from 'react-icons/lib/fa/trash';
 
-class PostItem extends Component {
-    onDeletePost = () => {
+class CommentItem extends Component {
+    onDeleteComment = () => {
         const {id, deletePost} = this.props;
         deletePost(id);
     }
@@ -22,47 +22,35 @@ class PostItem extends Component {
     }
 
     render() {
-        const {id, title, body, category, commentCount, author, voteScore, timestamp , isDetailed} = this.props;
+        const {id, body, category, commentCount, author, voteScore, timestamp} = this.props;
         return (
             <div className="row">
                 <div className="col-md-1">
                     <VotingView onUpVote={this.onUpVote} onDownVote={this.onDownVote} voteScore={voteScore} />
                 </div>
 
-                <div className="col-md-11">
+                <div className="col-md-5">
                     <div className="row">
                         <div className="col-md-10">
-                            {isDetailed
-                                ? (
-                                    <h3>{title} <small>{DateFormat(timestamp)}</small></h3>
-                                ) :  (
-                                    <h4><Link to={`/${category}/${id}`}>{title}</Link>  <small>{DateFormat(timestamp)}</small></h4>
-                                )}
+                            <h6>{author} <small>{DateFormat(timestamp)}</small></h6>
 
+                            <p>
+                                {body}
+                            </p>
                         </div>
                         <div className="col-md-1">
                             <Link to={`/edit/${id}`}>
-                                <EditIcon size={30} color={"#aaa"}/>
+                                <EditIcon size={20} color={"#aaa"}/>
                             </Link>
                         </div>
                         <div className="col-md-1" style={{cursor: "pointer"}}>
-                            <DeleteIcon size={30} color={"#aaa"} onClick={this.onDeletePost}/>
+                            <DeleteIcon size={20} color={"#aaa"} onClick={this.onDeletePost}/>
                         </div>
                     </div>
-
-                    <ul>
-                        <li>Author: {author}</li>
-                        <li>Number of Comments: {commentCount} </li>
-                    </ul>
-                    {isDetailed ? (
-                        <p>
-                            {body}
-                        </p>
-                    ): null}
                 </div>
             </div>
         )
     }
 }
 
-export default PostItem;
+export default CommentItem;

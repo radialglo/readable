@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {
     RECEIVE_POSTS,
     RECEIVE_CATEGORIES,
+    RECEIVE_COMMENTS,
     DELETE_POST,
     UPDATE_POST,
     UPDATE_POST_SORT,
@@ -12,10 +13,25 @@ import {
 
 function comments(state = { byIds: {}, allIds: []}, action) {
     switch (action.type) {
+        case RECEIVE_COMMENTS:
+            const { comments } = action;
+            let commentMap = {};
+            let commentIds = [];
+            comments.forEach((comment) => {
+                commentMap[comment.id] = comment;
+                commentIds.push(comment.id);
+            });
+
+            return {
+                byIds: commentMap,
+                allIds: commentIds
+            };
+
         default:
             return state
     }
 }
+
 
 function posts(state = { byIds: {}, allIds: []}, action) {
     switch (action.type) {
@@ -24,13 +40,16 @@ function posts(state = { byIds: {}, allIds: []}, action) {
             let postMap = {};
             let postIds = [];
             posts.forEach((post) => {
-               postMap[post.id] = post
+                postMap[post.id] = post;
                 postIds.push(post.id);
             });
 
             return {
-                byIds: postMap,
-                allIds: postIds
+                byIds: {
+                    ...state.byIds,
+                    ...postMap
+                },
+                allIds: [...new Set(postIds.concat(...state.allIds))]
             };
         case DELETE_POST:
             const {id} = action;

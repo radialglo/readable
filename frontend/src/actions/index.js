@@ -6,12 +6,14 @@ export const RECEIVE_CATEGORIES = 'LOAD_CATEGORIES';
 export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPDATE_POST_SORT = 'UPDATE_POST_SORT';
 
 
 export function createPost() {
+    // TODO: use
     return {
         type: CREATE_POST
     }
@@ -47,11 +49,25 @@ export function receiveCategories(categories) {
     }
 }
 
+export function receiveComments(comments) {
+    return {
+        type:  RECEIVE_COMMENTS,
+        comments,
+
+    }
+}
+
 export const fetchPosts = () =>  dispatch => (
     API.getPosts().then(posts =>
         dispatch(receivePosts(posts))
     )
 );
+
+export const fetchPost = (postId) => dispatch => (
+    API.getPost(postId).then(post =>
+        dispatch(receivePosts([post]))
+    )
+)
 
 export const fetchCategories = () =>  dispatch => (
     API.getCategories().then(categories =>
@@ -77,3 +93,9 @@ export const voteOnPost = (id, voteType) => dispatch => {
 
 export const upVoteOnPost = (id) => voteOnPost(id, VOTE_TYPE.UP_VOTE)
 export const downVoteOnPost = (id) => voteOnPost(id, VOTE_TYPE.DOWN_VOTE)
+
+export const fetchCommentsForPost = (postId) => dispatch => {
+    API.getCommentsForPost(postId).then(comments =>
+        dispatch(receiveComments(comments))
+    )
+}

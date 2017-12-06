@@ -38,6 +38,10 @@ export const getPosts = () =>
     fetch(`${api}/posts`, {headers})
         .then(res => res.json())
 
+export const getPost = (id) =>
+    fetch(`${api}/posts/${id}`, {headers})
+        .then(res => res.json())
+
 
 export const deletePost = (id) =>
     fetch(`${api}/posts/${id}`, {
@@ -55,3 +59,8 @@ export const voteOnPost = (id, voteType) =>
             option: voteType
         })
     }).then(res => res.json())
+
+export const getCommentsForPost = (postId) =>
+    fetch(`${api}/posts/${postId}/comments`, { headers })
+    .then(res => res.json())
+

@@ -58,6 +58,7 @@ class Root extends Component {
                                     deletePost={deletePost}
                                     upVoteOnPost={upVoteOnPost}
                                     downVoteOnPost={downVoteOnPost}
+                                    isDetailed={false}
                                 />
                             </li>
                         ))}
