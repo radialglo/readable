@@ -3,7 +3,7 @@ import './App.css';
 import { ROUTES } from './constants';
 import Root from './components/Root';
 import CreatePostForm from './components/CreatePostForm';
-import { getCategories } from './utils/api';
+import { getCategories, getPosts } from './utils/api';
 import {
     Route,
     Switch
@@ -11,25 +11,31 @@ import {
 
 class App extends Component {
     state = {
-        categories: []
+        categories: [],
+        posts: [],
     }
     componentDidMount() {
         getCategories().then((categories) =>
+            // TODO: migrate to action
             this.setState({categories})
         )
+        getPosts().then((posts) => {
+            // TODO: migrate to action
+            this.setState({posts})
+        })
     }
 
     render() {
-        const { categories } = this.state;
+        const { posts, categories } = this.state;
         return (
           <div>
               <Route exact path={ROUTES.ROOT} render={() => (
-                 <Root categories={categories}/>
+                 <Root categories={categories} posts={posts}/>
               )}/>
 
               <Switch>
                   <Route exact path={ROUTES.CREATE_POST} render={() => (
-                      <CreatePostForm/>
+                      <CreatePostForm categories={categories}/>
                   )}/>
 
                   <Route path={ROUTES.EDIT_POST} render={({match}) => (
