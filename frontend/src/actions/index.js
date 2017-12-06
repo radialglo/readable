@@ -7,6 +7,7 @@ export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPDATE_POST_SORT = 'UPDATE_POST_SORT';
@@ -57,6 +58,13 @@ export function receiveComments(comments) {
     }
 }
 
+export function updateComment(comment) {
+    return {
+        type: UPDATE_COMMENT,
+        comment,
+    }
+}
+
 export const fetchPosts = () =>  dispatch => (
     API.getPosts().then(posts =>
         dispatch(receivePosts(posts))
@@ -99,3 +107,21 @@ export const fetchCommentsForPost = (postId) => dispatch => {
         dispatch(receiveComments(comments))
     )
 }
+
+export const deleteComment = (id) => dispatch => {
+    API.deleteComment(id).then(
+        dispatch({
+            type: DELETE_COMMENT,
+            id
+        })
+    )
+}
+
+export const voteOnComment = (id, voteType) => dispatch => {
+    API.voteOnComment(id, voteType).then(comment => {
+        dispatch(updateComment(comment))
+    })
+}
+
+export const upVoteOnComment = (id) => voteOnComment(id, VOTE_TYPE.UP_VOTE)
+export const downVoteOnComment = (id) => voteOnComment(id, VOTE_TYPE.DOWN_VOTE)

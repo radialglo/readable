@@ -7,18 +7,18 @@ import DeleteIcon from 'react-icons/lib/fa/trash';
 
 class CommentItem extends Component {
     onDeleteComment = () => {
-        const {id, deletePost} = this.props;
-        deletePost(id);
+        const {id, deleteComment} = this.props;
+        deleteComment(id);
     }
 
     onUpVote = () => {
-        const {id, upVoteOnPost} = this.props;
-        upVoteOnPost(id);
+        const {id, upVoteOnComment} = this.props;
+        upVoteOnComment(id);
     }
 
     onDownVote = () => {
-        const {id, downVoteOnPost} = this.props;
-        downVoteOnPost(id);
+        const {id, downVoteOnComment} = this.props;
+        downVoteOnComment(id);
     }
 
     render() {
@@ -29,9 +29,9 @@ class CommentItem extends Component {
                     <VotingView onUpVote={this.onUpVote} onDownVote={this.onDownVote} voteScore={voteScore} />
                 </div>
 
-                <div className="col-md-5">
+                <div className="col-md-11">
                     <div className="row">
-                        <div className="col-md-10">
+                        <div className="col-md-3">
                             <h6>{author} <small>{DateFormat(timestamp)}</small></h6>
 
                             <p>
@@ -39,12 +39,13 @@ class CommentItem extends Component {
                             </p>
                         </div>
                         <div className="col-md-1">
+                            {/* TODO: Change to Edit Post*/}
                             <Link to={`/edit/${id}`}>
                                 <EditIcon size={20} color={"#aaa"}/>
                             </Link>
                         </div>
                         <div className="col-md-1" style={{cursor: "pointer"}}>
-                            <DeleteIcon size={20} color={"#aaa"} onClick={this.onDeletePost}/>
+                            <DeleteIcon size={20} color={"#aaa"} onClick={this.onDeleteComment}/>
                         </div>
                     </div>
                 </div>

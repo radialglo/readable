@@ -4,10 +4,12 @@ import PostDetailView from '../components/PostDetailView';
 import {
     fetchPost,
     fetchCommentsForPost,
+    deleteComment,
+    upVoteOnComment,
+    downVoteOnComment,
     deletePost,
     upVoteOnPost,
     downVoteOnPost,
-    updatePostSort,
 } from '../actions';
 
 
@@ -28,10 +30,13 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchPost: (postId) => dispatch(fetchPost(postId)),
         fetchCommentsForPost: (postId) => dispatch(fetchCommentsForPost(postId)),
+        deleteComment: (id) => dispatch(deleteComment(id)),
+        upVoteOnComment: (id) => dispatch(upVoteOnComment(id)),
+        downVoteOnComment: (id) => dispatch(downVoteOnComment(id)),
         deletePost: (id) => dispatch(deletePost(id)),
         upVoteOnPost: (id) => dispatch(upVoteOnPost(id)),
         downVoteOnPost: (id) => dispatch(downVoteOnPost(id)),
-        updatePostSort: (sortType) => dispatch(updatePostSort(sortType))
+
     }
 
 }
