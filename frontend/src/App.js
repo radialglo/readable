@@ -1,41 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 import { ROUTES } from './constants';
-import Root from './components/Root';
-import CreatePostForm from './components/CreatePostForm';
-import { getCategories, getPosts } from './utils/api';
+import Root from './containers/Root';
+import CreatePostFormContainer from './containers/CreatePostFormContainer';
 import {
     Route,
     Switch
 } from 'react-router-dom';
 
 class App extends Component {
-    state = {
-        categories: [],
-        posts: [],
-    }
-    componentDidMount() {
-        getCategories().then((categories) =>
-            // TODO: migrate to action
-            this.setState({categories})
-        )
-        getPosts().then((posts) => {
-            // TODO: migrate to action
-            this.setState({posts})
-        })
-    }
 
     render() {
-        const { posts, categories } = this.state;
         return (
           <div>
               <Route exact path={ROUTES.ROOT} render={() => (
-                 <Root categories={categories} posts={posts}/>
+                 <Root />
               )}/>
 
               <Switch>
                   <Route exact path={ROUTES.CREATE_POST} render={() => (
-                      <CreatePostForm categories={categories}/>
+                      <CreatePostFormContainer />
                   )}/>
 
                   <Route path={ROUTES.EDIT_POST} render={({match}) => (
