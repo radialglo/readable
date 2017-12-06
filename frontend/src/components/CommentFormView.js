@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {FORM_TYPE, ROUTES} from '../constants';
-import serializeForm from "form-serialize";
 
 class CommentForm extends Component {
     constructor(props) {
         super(props);
-
-        const {
-            initBody,
-        } = props;
 
         this.state = {
             body: '',
@@ -52,8 +46,6 @@ class CommentForm extends Component {
 
 
     render() {
-
-        const {onSubmit} = this.props;
 
         return (
             <form onSubmit={this.handleSubmit}>

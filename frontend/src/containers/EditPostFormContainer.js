@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import EditPostForm from '../components/EditPostForm';
-import {editPost, fetchPost} from "../actions";
+import { editPost } from "../actions";
 
 function mapStateToProps({posts}, ownProps) {
     const { postId } = ownProps;

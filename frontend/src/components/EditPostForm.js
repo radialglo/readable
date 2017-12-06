@@ -4,7 +4,7 @@ import serializeForm from 'form-serialize';
 import {
     withRouter
 } from 'react-router-dom';
-import { ROUTES, FORM_TYPE } from '../constants';
+import { FORM_TYPE } from '../constants';
 
 
 import PostFormView from './PostFormView'

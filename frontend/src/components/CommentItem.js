@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
 import DateFormat from 'dateformat';
 import VotingView from './VotingView';
 import EditIcon from 'react-icons/lib/fa/pencil';
 import DeleteIcon from 'react-icons/lib/fa/trash';
-import serializeForm from 'form-serialize';
-import {ROUTES} from "../constants";
+
 
 class CommentItem extends Component {
     constructor(props) {
@@ -57,7 +55,7 @@ class CommentItem extends Component {
     }
 
     render() {
-        const {id, body, category, commentCount, author, voteScore, timestamp} = this.props;
+        const { body, author, voteScore, timestamp} = this.props;
         const {isEditing} = this.state;
         return (
             <div className="row">

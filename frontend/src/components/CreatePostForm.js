@@ -4,7 +4,7 @@ import serializeForm from 'form-serialize';
 import {
     withRouter
 } from 'react-router-dom';
-import {FORM_TYPE, ROUTES} from '../constants';
+import { FORM_TYPE } from '../constants';
 
 
 import PostFormView from './PostFormView'
@@ -19,7 +19,7 @@ class CreatePostForm extends Component {
             author,
             category
         } = serializeForm(e.target, {hash: true});
-     
+
         this.props.createPost(title, body, author, category);
         this.props.history.goBack();
 
