@@ -19,11 +19,9 @@ class CreatePostForm extends Component {
             author,
             category
         } = serializeForm(e.target, {hash: true});
-
+     
         this.props.createPost(title, body, author, category);
-
-        // TODO: this should go back to original page either Root or Category View
-        this.props.history.push(ROUTES.ROOT);
+        this.props.history.goBack();
 
     }
 

@@ -15,11 +15,11 @@ class App extends Component {
     render() {
         return (
           <div>
-              <Route exact path={ROUTES.ROOT} render={() => (
-                 <PostListContainer  />
-              )}/>
-
               <Switch>
+                  <Route exact path={ROUTES.ROOT} render={() => (
+                      <PostListContainer  />
+                  )}/>
+
                   <Route exact path={ROUTES.CREATE_POST} render={() => (
                       <CreatePostFormContainer />
                   )}/>

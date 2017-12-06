@@ -30,8 +30,7 @@ class EditPostForm extends Component {
 
         editPost(postId, title, body);
 
-        // TODO: this should go back to original page either Root or Category View
-        this.props.history.push(ROUTES.ROOT);
+        this.props.history.goBack();
     }
 
     render() {
