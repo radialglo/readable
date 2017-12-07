@@ -5,6 +5,8 @@ import PostListContainer from './containers/PostListContainer';
 import CreatePostFormContainer from './containers/CreatePostFormContainer';
 import PostDetailContainer from './containers/PostDetailContainer';
 import EditPostFormContainer from './containers/EditPostFormContainer';
+import NavigationDrawerContainer from './containers/NavigationDrawerContainer';
+
 import {
     Route,
     Switch
@@ -15,6 +17,7 @@ class App extends Component {
     render() {
         return (
           <div>
+              <NavigationDrawerContainer/>
               <Switch>
                   <Route exact path={ROUTES.ROOT} render={() => (
                       <PostListContainer  />
